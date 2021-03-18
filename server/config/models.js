@@ -26,6 +26,7 @@ const User = new Schema (
         teams: {
             type: Array,
             uniqueItems: true,
+            additionalItems: true,
             required: false,
         },
         online: {
@@ -64,6 +65,7 @@ const Team = new Schema (
             type: Array,
             uniqueItems: true,
             required: false,
+            additionalItems: true,
         }
     },
     {
@@ -92,6 +94,7 @@ const Task = new Schema (
             type: Array,
             uniqueItems: true,
             required: false,
+            additionalItems: true,
         },
         comments: {
             type: String, 
