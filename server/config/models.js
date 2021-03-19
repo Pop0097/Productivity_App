@@ -56,7 +56,7 @@ const Team = new Schema (
             required: true,
             trim: true,
         },
-        admin: {
+        adminId: {
             type: String, 
             required: true,
             trim: true,

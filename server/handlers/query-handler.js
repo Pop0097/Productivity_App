@@ -21,9 +21,14 @@ mongoClient.connect((err, client) => {
 
     db = client.db(process.env.MONGO_DBNAME);
 
-    // Creates a case-insensitive index for when we search for usernames
+    // Creates a case-insensitive index for when we search for these items
     db.collection('users').createIndex(
-        { username: 1 },
+        { name: 1 },
+        { collation: { locale: 'en', strength: 2 } }
+    );
+
+    db.collection('teams').createIndex(
+        { teamName: 1 },
         { collation: { locale: 'en', strength: 2 } }
     );
 }); 
@@ -120,6 +125,124 @@ userNameCheck = (data) => {
     });
 }
 
+createTeam = (data) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            db.collection('teams').insertOne(data, (err, result) => {
+                if (err) {
+                    reject(err);
+                }
+
+                resolve(result);
+            })
+        } catch (err) {
+            reject(err);
+        }
+    });
+}
+
+teamNameCheck = (data) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            db.collection('teams').find(data).collation({ locale: 'en', strength: 2})
+                .count((err, result) => {
+                    if (err) {
+                        reject(err);
+                    }
+
+                    resolve(result);
+                });
+        } catch (err) {
+            reject(err);
+        }
+    });
+}
+
+checkUserInTeam = (data) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            db.collection('teams').find({ members: data.userId })
+                .count((err, result) => {
+                    if (err) {
+                        reject(err);
+                    }
+
+                    resolve(result);
+                })
+        } catch (err) {
+            reject(err);
+        }
+    });
+}
+
+addMemberToTeam = (data) => {
+
+    return new Promise(async (resolve, reject) => {
+        try {
+            db.collection('teams').findOneAndUpdate(
+                { 
+                    _id : ObjectID(data.teamId)
+                },
+                { 
+                    $addToSet: { // Appends this element to array
+                        members: data.userId
+                    }
+                }, (error, result) => {
+                    if (error) {
+                        reject(error);
+                    }
+
+                    resolve(result);
+                });
+        } catch (err) {
+            reject(err);
+        }
+    });
+}
+
+removeMemberFromTeam = (data) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            db.collection('teams').findOneAndUpdate(
+                {
+                    _id : ObjectID(data.teamId)
+                },
+                {
+                    $pull: { // Removes all instances of this element from array
+                        members: data.userId
+                    }
+                }, (err, result) => {
+                    if (err) {
+                        reject(err);
+                    }
+
+                    resolve(result);
+                })
+        } catch (err) {
+            reject(err);
+        }
+    });
+}
+
+getTeamById = (data) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            db.collection('teams').findOne(
+                {
+                    _id: ObjectID(data.id),
+                }, (err, result) => {
+                    if (err) {
+                        reject(err);
+                    }
+
+                    resolve(result);
+                });
+        } catch (err) {
+            reject(err)
+        }
+    });
+}
+
 /* Helpers end */
 
 module.exports = {
@@ -128,4 +251,10 @@ module.exports = {
     makeUserOnline,
     getUserByUsername,
     userNameCheck,
+    createTeam,
+    teamNameCheck,
+    checkUserInTeam,
+    addMemberToTeam,
+    removeMemberFromTeam,
+    getTeamById,
 };

@@ -18,10 +18,7 @@ module.exports.USERID_NOT_FOUND = `User Id can't be empty.`;
 module.exports.NAME_NOT_FOUND = `Name can't be empty.`;
 module.exports.EMAIL_NOT_FOUND = `Name can't be empty.`;
 module.exports.USER_NOT_FOUND = `User does not exist.`;
-/* Regustration related constants ends */
 
-
-/* Route related constants starts */
 module.exports.USERNAME_AVAILABLE_FAILED = `Username is unavailable.`;
 module.exports.USERNAME_AVAILABLE_OK = `Username is available.`;
 module.exports.USER_REGISTRATION_OK = `User registration successful.`;
@@ -31,5 +28,34 @@ module.exports.USER_LOGIN_FAILED = `User login failed.`;
 module.exports.USER_NOT_LOGGED_IN = `User is not logged in.`;
 module.exports.USER_LOGGED_OUT = `User has logged out.`;
 module.exports.USER_LOGOUT_FAILED = `User logout has failed.`;
+/* Registration related constants ends */
+
+/* Team related constants starts */
+module.exports.TEAM_NAME_NOT_FOUND = `team name can't be empty.`;
+module.exports.ORGANIZATION_NOT_FOUND = `organization can't be empty.`;
+module.exports.ADMIN_ID_NOT_FOUND = `admin ID be empty.`;
+
+module.exports.TEAM_NAME_AVAILABLE_FAILED = `team name is unavailable.`;
+module.exports.TEAM_NAME_AVAILABLE_OK = `team name is available.`;
+module.exports.TEAM_REGISTRATION_OK = `team registration successful.`;
+module.exports.TEAM_REGISTRATION_FAILED = `team registration unsuccessful.`;
+
+module.exports.USER_ID_NOT_FOUND = `need to include a userid`;
+module.exports.TEAM_ID_NOT_FOUND = `need to include teamid`;
+module.exports.USER_AREADY_ADDED = `User was already added`;
+module.exports.USER_DOES_NOT_EXIST = `User was never added to team`;
+
+module.exports.TEAM_ADD_MEMBER_FAILED = `adding member failed`;
+module.exports.TEAM_ADD_MEMBER_PASSED = `adding member passed`;
+module.exports.TEAM_REMOVE_MEMBER_FAILED = `removing member failed`;
+module.exports.TEAM_REMOVE_MEMBER_PASSED = `removing member passed`;
+module.exports.GETTING_MEMBERS_FAILED = `getting members failed`;
+module.exports.GETTING_MEMBERS_SUCCESS = `getting members succeeded`;
+/* Team related constants ends */
+
+
+
+/* Route related constants starts */
+
 /* Route related constants ends */
 
