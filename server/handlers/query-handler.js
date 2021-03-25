@@ -274,14 +274,51 @@ getTeamByName = (data) => {
     });
 }
 
+createTask = (data) => {
+    return new Promise( async (resolve, reject) => {
+        try {
+            db.collection('tasks').insertOne(data, (err, result) => {
+                    if (err) {
+                        reject(err);
+                    }
+
+                    resolve(result);
+                });
+        } catch (err) {
+            reject(err);
+        }
+    });
+}
+
+deleteTask = (data) => {
+    return new Promise (async (resolve, reject) => {
+        try {
+            db.collection('tasks').findOneAndDelete({
+                    _id: ObjectID(data._id),
+                }, (err, result) => {
+                    if (err) {
+                        reject(err);
+                    }
+
+                    resolve(result);
+                });
+        } catch (err) {
+            reject(err);
+        }
+    });
+}
+
 /* Helpers end */
 
 module.exports = {
+    /* User Stuff */
     registerUser,
     logout,
     makeUserOnline,
     getUserByUsername,
     userNameCheck,
+
+    /* Team Stuff */
     createTeam,
     teamNameCheck,
     checkUserInTeam,
@@ -289,4 +326,8 @@ module.exports = {
     removeMemberFromTeam,
     getTeamById,
     getTeamByName,
+
+    /* Task Stuff */
+    createTask,
+    deleteTask,
 };

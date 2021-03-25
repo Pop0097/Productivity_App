@@ -80,12 +80,15 @@ const Task = new Schema (
             required: true,
             trim: true,
         },
+        teamId: {
+
+        },
         subteam: {
             type: String, 
             required: true,
             trim: true,
         },
-        creator: {
+        creatorId: {
             type: String, 
             required: true,
             trim: true,

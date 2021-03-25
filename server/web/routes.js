@@ -22,6 +22,8 @@ router.get('/team/searchTeams', teamRouteHandler.searchTeamsHandler);
 /* Team creation and management ends */
 
 /* Task creation and management starts */
+router.post('/task/createTask', taskRouteHandler.createTaskHander);
+router.delete('/task/deleteTask', taskRouteHandler.deleteTaskHandler);
 /* Task creation and management ends */
 
 module.exports = router; 

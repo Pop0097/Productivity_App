@@ -1,4 +1,3 @@
-const { query } = require('express');
 const CONSTANTS = require('../config/constants');
 
 const queryHandler = require('./query-handler');

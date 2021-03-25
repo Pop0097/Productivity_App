@@ -55,7 +55,34 @@ module.exports.GETTING_TEAMS_FAILED = `getting teams failed`;
 module.exports.GETTING_TEAMS_SUCCESS = `getting teams succeeded`;
 /* Team related constants ends */
 
+/* Task related constants starts */
+module.exports.TASK_NAME_NOT_FOUND = `task name can't be empty.`;
+module.exports.TEAM_ID_NOT_FOUND = `team id can't be empty.`;
+module.exports.SUBTEAM_NOT_FOUND = `subteam cannot be empty.`;
+module.exports.CREATOR_NOT_FOUND = `creatir cannot be empty.`;
+module.exports.PRIORITY_NOT_FOUND = `priority cannot be empty.`;
+module.exports.TASK_ID_NOT_FOUND = `task id cannot be empty.`;
 
+module.exports.TASK_REGISTRATION_OK = `task registration successful.`;
+module.exports.TASK_REGISTRATION_FAILED = `task registration unsuccessful.`;
+
+module.exports.TASK_DELETE_OK = `task delete successful.`;
+module.exports.TASK_DELETE_FAILED = `task delete unsuccessful.`;
+
+// module.exports.USER_ID_NOT_FOUND = `need to include a userid`;
+// module.exports.TEAM_ID_NOT_FOUND = `need to include teamid`;
+// module.exports.USER_AREADY_ADDED = `User was already added`;
+// module.exports.USER_DOES_NOT_EXIST = `User was never added to team`;
+
+// module.exports.TEAM_ADD_MEMBER_FAILED = `adding member failed`;
+// module.exports.TEAM_ADD_MEMBER_PASSED = `adding member passed`;
+// module.exports.TEAM_REMOVE_MEMBER_FAILED = `removing member failed`;
+// module.exports.TEAM_REMOVE_MEMBER_PASSED = `removing member passed`;
+// module.exports.GETTING_MEMBERS_FAILED = `getting members failed`;
+// module.exports.GETTING_MEMBERS_SUCCESS = `getting members succeeded`;
+// module.exports.GETTING_TEAMS_FAILED = `getting teams failed`;
+// module.exports.GETTING_TEAMS_SUCCESS = `getting teams succeeded`;
+/* Task related constants ends */
 
 /* Route related constants starts */
 
