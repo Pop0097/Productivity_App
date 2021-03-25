@@ -51,6 +51,8 @@ module.exports.TEAM_REMOVE_MEMBER_FAILED = `removing member failed`;
 module.exports.TEAM_REMOVE_MEMBER_PASSED = `removing member passed`;
 module.exports.GETTING_MEMBERS_FAILED = `getting members failed`;
 module.exports.GETTING_MEMBERS_SUCCESS = `getting members succeeded`;
+module.exports.GETTING_TEAMS_FAILED = `getting teams failed`;
+module.exports.GETTING_TEAMS_SUCCESS = `getting teams succeeded`;
 /* Team related constants ends */
 
 

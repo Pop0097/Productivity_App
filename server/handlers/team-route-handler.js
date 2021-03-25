@@ -179,7 +179,33 @@ removeMemberRouteHandler = async (req, res) => {
 }
 
 searchTeamsHandler = async (req, res) => {
+    const data = {
+        name: req.body.name,
+    };
 
+    try {
+        if ('' === data.name) {
+            return res.status(CONSTANTS.SERVER_ERROR_HTTP_CODE).json({
+                error: true,
+                message: CONSTANTS.TEAM_NAME_NOT_FOUND
+            });
+        } else {
+            const result = await queryHandler.getTeamByName(data);
+
+            res.status(CONSTANTS.SERVER_OK_HTTP_CODE).json({
+                error: false,
+                result: result,
+                message: CONSTANTS.GETTING_TEAMS_SUCCESS,
+            });
+        }
+    } catch (err) {
+        res.status(CONSTANTS.SERVER_ERROR_HTTP_CODE).json({
+            error: true,
+            message: CONSTANTS.GETTING_TEAMS_FAILED,
+            extraMessage: CONSTANTS.SERVER_ERROR_MESSAGE,
+            errorMessage: err,
+        });
+    }
 }
 
 getMembersRouteHandler = async (req, res) => {
@@ -195,7 +221,7 @@ getMembersRouteHandler = async (req, res) => {
             });
         } else {
             const result = await queryHandler.getTeamById(data);
-
+            
             res.status(CONSTANTS.SERVER_OK_HTTP_CODE).json({
                 error: false,
                 result: result.members,

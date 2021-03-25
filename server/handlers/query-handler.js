@@ -28,9 +28,17 @@ mongoClient.connect((err, client) => {
     );
 
     db.collection('teams').createIndex(
-        { teamName: 1 },
+        { name: 1 },
         { collation: { locale: 'en', strength: 2 } }
     );
+
+    /* 
+    db.collection('teams').createIndex( // Allows us to search via text for teams with a specific name
+         {
+             name: "text",
+         }
+     ); 
+     */
 }); 
 
 /* Connecting to database ends */
@@ -243,6 +251,29 @@ getTeamById = (data) => {
     });
 }
 
+getTeamByName = (data) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            db.collection('teams').find(
+                {
+                    name: { // Finds all documents with substring data.name in name 
+                        $regex: data.name,
+                        $options: '$i',
+                    }
+                }).toArray((err, result) => {
+                    if (err) {
+                        reject(err);
+                    }
+
+                    resolve(result);
+                });
+
+        } catch (err) {
+            reject(err)
+        }
+    });
+}
+
 /* Helpers end */
 
 module.exports = {
@@ -257,4 +288,5 @@ module.exports = {
     addMemberToTeam,
     removeMemberFromTeam,
     getTeamById,
+    getTeamByName,
 };
