@@ -69,6 +69,9 @@ module.exports.TASK_REGISTRATION_FAILED = `task registration unsuccessful.`;
 module.exports.TASK_DELETE_OK = `task delete successful.`;
 module.exports.TASK_DELETE_FAILED = `task delete unsuccessful.`;
 
+module.exports.TASK_COMPLETED_OK = `marking task complete successful.`;
+module.exports.TASK_COMPLETED_FAILED = `marking task complete unsuccessful.`;
+
 // module.exports.USER_ID_NOT_FOUND = `need to include a userid`;
 // module.exports.TEAM_ID_NOT_FOUND = `need to include teamid`;
 // module.exports.USER_AREADY_ADDED = `User was already added`;

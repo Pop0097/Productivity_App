@@ -1,25 +1,25 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const User = new Schema (
+const User = new Schema(
     {
         username: {
-            type: String, 
+            type: String,
             required: true,
             trim: true,
         },
         name: {
-            type: String, 
+            type: String,
             required: true,
             trim: true,
         },
         email: {
-            type: String, 
+            type: String,
             required: true,
             trim: true,
         },
         password: {
-            type: String, 
+            type: String,
             required: true,
             trim: true,
         },
@@ -30,11 +30,11 @@ const User = new Schema (
             required: false,
         },
         online: {
-            type: Boolean, 
+            type: Boolean,
             required: true,
         },
         socketId: {
-            type: String, 
+            type: String,
             required: false,
             trim: true,
         }
@@ -44,20 +44,20 @@ const User = new Schema (
     },
 );
 
-const Team = new Schema (
+const Team = new Schema(
     {
         name: {
-            type: String, 
+            type: String,
             required: true,
             trim: true,
         },
         organization: {
-            type: String, 
+            type: String,
             required: true,
             trim: true,
         },
         adminId: {
-            type: String, 
+            type: String,
             required: true,
             trim: true,
         },
@@ -73,10 +73,10 @@ const Team = new Schema (
     }
 );
 
-const Task = new Schema (
+const Task = new Schema(
     {
         name: {
-            type: String, 
+            type: String,
             required: true,
             trim: true,
         },
@@ -84,12 +84,12 @@ const Task = new Schema (
 
         },
         subteam: {
-            type: String, 
+            type: String,
             required: true,
             trim: true,
         },
         creatorId: {
-            type: String, 
+            type: String,
             required: true,
             trim: true,
         },
@@ -100,7 +100,7 @@ const Task = new Schema (
             additionalItems: true,
         },
         comments: {
-            type: String, 
+            type: String,
             required: true,
             trim: true,
         },
@@ -109,6 +109,10 @@ const Task = new Schema (
             minimum: 1,
             maximum: 3,
             required: true,
+        },
+        completed: {
+            type: Boolean,
+            required: true
         }
     },
     {

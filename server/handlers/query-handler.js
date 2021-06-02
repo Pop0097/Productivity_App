@@ -39,7 +39,7 @@ mongoClient.connect((err, client) => {
          }
      ); 
      */
-}); 
+});
 
 /* Connecting to database ends */
 
@@ -63,13 +63,13 @@ registerUser = (data) => {
 
 logout = (userId) => {
     const data = {
-        $set : {
-            'online' : false,
+        $set: {
+            'online': false,
         }
     }
-    return new Promise (async (resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
         try {
-            db.collection('users').updateOne({ _id : ObjectID(userId) }, data, (err, result) => {
+            db.collection('users').updateOne({ _id: ObjectID(userId) }, data, (err, result) => {
                 if (err) {
                     reject(err);
                 }
@@ -83,46 +83,46 @@ logout = (userId) => {
 }
 
 makeUserOnline = (userId) => {
-    return new Promise( async (resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
         try {
-            db.collection('users').findOneAndUpdate({ _id : ObjectID(userId) }, { 
+            db.collection('users').findOneAndUpdate({ _id: ObjectID(userId) }, {
                 "$set": { // Sets values for the parameters
                     'online': true,
-                } 
+                }
             }, (err, result) => { // Error catching
-                if( err ){
+                if (err) {
                     reject(err);
                 }
                 resolve(result.value);
             });
         } catch (error) {
             reject(error)
-        }	
+        }
     });
 }
 
 getUserByUsername = (username) => {
-    return new Promise( async (resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
         try {
-            db.collection('users').find({ username :  username })
-                .toArray( (error, result) => { // Converts found items to an array of objects
-                    if( error ){
+            db.collection('users').find({ username: username })
+                .toArray((error, result) => { // Converts found items to an array of objects
+                    if (error) {
                         reject(error);
                     }
                     resolve(result[0]); // Only returns first occurence
                 });
         } catch (error) {
             reject(error)
-        }	
+        }
     });
 }
 
 userNameCheck = (data) => {
-    return new Promise( async (resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
         try {
             db.collection('users').find(data).collation({ locale: 'en', strength: 2 })
-                .count( (error, result) => {
-                    if( error ){
+                .count((error, result) => {
+                    if (error) {
                         reject(error);
                     }
                     resolve(result);
@@ -152,7 +152,7 @@ createTeam = (data) => {
 teamNameCheck = (data) => {
     return new Promise(async (resolve, reject) => {
         try {
-            db.collection('teams').find(data).collation({ locale: 'en', strength: 2})
+            db.collection('teams').find(data).collation({ locale: 'en', strength: 2 })
                 .count((err, result) => {
                     if (err) {
                         reject(err);
@@ -188,10 +188,10 @@ addMemberToTeam = (data) => {
     return new Promise(async (resolve, reject) => {
         try {
             db.collection('teams').findOneAndUpdate(
-                { 
-                    _id : ObjectID(data.teamId)
+                {
+                    _id: ObjectID(data.teamId)
                 },
-                { 
+                {
                     $addToSet: { // Appends this element to array
                         members: data.userId
                     }
@@ -213,7 +213,7 @@ removeMemberFromTeam = (data) => {
         try {
             db.collection('teams').findOneAndUpdate(
                 {
-                    _id : ObjectID(data.teamId)
+                    _id: ObjectID(data.teamId)
                 },
                 {
                     $pull: { // Removes all instances of this element from array
@@ -275,11 +275,53 @@ getTeamByName = (data) => {
 }
 
 createTask = (data) => {
-    return new Promise( async (resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
         try {
             db.collection('tasks').insertOne(data, (err, result) => {
-                    if (err) {
-                        reject(err);
+                if (err) {
+                    reject(err);
+                }
+
+                resolve(result);
+            });
+        } catch (err) {
+            reject(err);
+        }
+    });
+}
+
+deleteTask = (data) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            db.collection('tasks').findOneAndDelete({
+                _id: ObjectID(data._id),
+            }, (err, result) => {
+                if (err) {
+                    reject(err);
+                }
+
+                resolve(result);
+            });
+        } catch (err) {
+            reject(err);
+        }
+    });
+}
+
+completeTask = (data) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            db.collection('tasks').findOneAndUpdate(
+                {
+                    _id: ObjectID(data._id)
+                },
+                {
+                    '$set': {
+                        'completed': true
+                    }
+                }, (error, result) => {
+                    if (error) {
+                        reject(result);
                     }
 
                     resolve(result);
@@ -290,14 +332,20 @@ createTask = (data) => {
     });
 }
 
-deleteTask = (data) => {
-    return new Promise (async (resolve, reject) => {
+incompleteTask = (data) => {
+    return new Promise(async (resolve, reject) => {
         try {
-            db.collection('tasks').findOneAndDelete({
-                    _id: ObjectID(data._id),
-                }, (err, result) => {
-                    if (err) {
-                        reject(err);
+            db.collection('tasks').findOneAndUpdate(
+                {
+                    _id: ObjectID(data._id)
+                },
+                {
+                    '$set': {
+                        'completed': false
+                    }
+                }, (error, result) => {
+                    if (error) {
+                        reject(result);
                     }
 
                     resolve(result);
@@ -330,4 +378,6 @@ module.exports = {
     /* Task Stuff */
     createTask,
     deleteTask,
+    completeTask,
+    incompleteTask,
 };
