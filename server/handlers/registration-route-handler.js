@@ -33,7 +33,7 @@ registerRouteHandler = async (req, res) => {
             return res.status(CONSTANTS.SERVER_ERROR_HTTP_CODE).json({
                 error: true,
                 message: CONSTANTS.NAME_NOT_FOUND
-            }); 
+            });
         } else if ('' === data.email) {
             return res.status(CONSTANTS.SERVER_ERROR_HTTP_CODE).json({
                 error: true,
@@ -61,7 +61,7 @@ registerRouteHandler = async (req, res) => {
 }
 
 loginRouteHandler = async (req, res) => {
-    
+
     const body = req.body;
 
     const data = {
@@ -84,6 +84,7 @@ loginRouteHandler = async (req, res) => {
         } else {
 
             const result = await queryHandler.getUserByUsername(data.username);
+            console.log(result);
 
             if (null === result || undefined === result) {
                 res.status(CONSTANTS.SERVER_NOT_FOUND_HTTP_CODE).json({
@@ -92,18 +93,17 @@ loginRouteHandler = async (req, res) => {
                 });
             } else {
                 if (passwordHash.compareHash(data.password, result.password)) {
-                    
                     await queryHandler.makeUserOnline(result._id);
 
                     res.status(CONSTANTS.SERVER_OK_HTTP_CODE).json({
-                        error : false,
-                        userId : result._id,
-                        message : CONSTANTS.USER_LOGIN_OK
+                        error: false,
+                        userId: result._id,
+                        message: CONSTANTS.USER_LOGIN_OK
                     });
                 } else {
                     res.status(CONSTANTS.SERVER_NOT_FOUND_HTTP_CODE).json({
-                        error : true,
-                        message : CONSTANTS.USER_LOGIN_FAILED
+                        error: true,
+                        message: CONSTANTS.USER_LOGIN_FAILED
                     });
                 }
             }
@@ -131,9 +131,9 @@ logoutRouteHandler = async (req, res) => {
             await queryHandler.logout(result._id);
 
             res.status(CONSTANTS.SERVER_OK_HTTP_CODE).json({
-                error : false,
-                userId : result._id,
-                message : CONSTANTS.USER_LOGGED_OUT
+                error: false,
+                userId: result._id,
+                message: CONSTANTS.USER_LOGGED_OUT
             });
         }
     } catch (err) {
@@ -156,10 +156,10 @@ userNameCheckHandler = async (req, res) => {
             });
         } else {
             // Use await clause so we only continue on if this process has completed
-            const count = await queryHandler.userNameCheck({ username : username });
-    
+            const count = await queryHandler.userNameCheck({ username: username });
+
             // Returns error if exists
-            if (count == 0) {   
+            if (count == 0) {
                 res.json({
                     error: false,
                     message: CONSTANTS.USERNAME_AVAILABLE_OK

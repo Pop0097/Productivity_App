@@ -106,6 +106,7 @@ getUserByUsername = (username) => {
         try {
             db.collection('users').find({ username: username })
                 .toArray((error, result) => { // Converts found items to an array of objects
+                    console.log(username, result);
                     if (error) {
                         reject(error);
                     }

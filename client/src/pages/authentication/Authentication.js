@@ -4,19 +4,12 @@ import { Tabs, Tab } from 'react-bootstrap';
 
 import './Authentication.css';
 
+import Login from './login/Login';
+import Registration from './registration/Registration';
+
 class Authentication extends Component {
     constructor(props) {
         super(props);
-
-        this.state = {
-            loadingState: false
-        };
-    }
-
-    setRenderLoadingState = (loading) => {
-        this.setState({
-            loadingState: loading
-        });
     }
 
     render() {
@@ -25,18 +18,13 @@ class Authentication extends Component {
                 <div className="authentication-screen">
                     <Tabs variant="pills" defaultActiveKey="login">
                         <Tab eventKey="login" title="Sign In">
-                            {/* <Login loadingState={this.setRenderLoadingState} /> */}
+                            <Login />
                         </Tab>
                         <Tab eventKey="registration" title="Sign Up">
-                            {/* <Login loadingState={this.setRenderLoadingState} /> */}
+                            <Registration />
                         </Tab>
                     </Tabs>
                 </div>
-
-                <div className={`overlay auth-loading ${this.state.loadingState ? '' : 'visibility-hidden'}`}>
-                    <h1> Loading </h1>
-                </div>
-
             </div>
         );
     }
