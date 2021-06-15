@@ -53,6 +53,8 @@ module.exports.GETTING_MEMBERS_FAILED = `getting members failed`;
 module.exports.GETTING_MEMBERS_SUCCESS = `getting members succeeded`;
 module.exports.GETTING_TEAMS_FAILED = `getting teams failed`;
 module.exports.GETTING_TEAMS_SUCCESS = `getting teams succeeded`;
+module.exports.GETTING_TASKS_FAILED = `getting tasks failed`;
+module.exports.GETTING_TASKS_SUCCESS = `getting tasks succeeded`;
 /* Team related constants ends */
 
 /* Task related constants starts */
@@ -71,6 +73,9 @@ module.exports.TASK_DELETE_FAILED = `task delete unsuccessful.`;
 
 module.exports.TASK_COMPLETED_OK = `marking task complete successful.`;
 module.exports.TASK_COMPLETED_FAILED = `marking task complete unsuccessful.`;
+
+module.exports.TASK_FOUND_OK = `task find successful.`;
+module.exports.TASK_FOUND_FAILED = `task find unsuccessful.`;
 
 // module.exports.USER_ID_NOT_FOUND = `need to include a userid`;
 // module.exports.TEAM_ID_NOT_FOUND = `need to include teamid`;

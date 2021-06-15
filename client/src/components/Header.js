@@ -34,10 +34,26 @@ class Header extends Component {
         }
     }
 
+    createTeam = async (event) => {
+        event.preventDefault()
+
+        try {
+            await HttpServer.removeLocalStorage();
+            await HttpServer.logout({ userId: this.state.userId });
+
+            this.props.history.push('/');
+        } catch (err) {
+            console.log(err);
+            alert('Error logging out.');
+            throw err;
+        }
+    }
+
     render() {
         return (
             <div>
                 <p onClick={this.handleLogOut}>Logout</p>
+                <p onClick={this.createTeam}>Create Team</p>
             </div>
         );
     }

@@ -98,6 +98,28 @@ class HttpServer {
             }
         });
     }
+
+    getTeamTasksById(teamId) {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const result = await axios.post("http://localhost:5000/team/getTeamTasksById", teamId)
+                resolve(result.data)
+            } catch (err) {
+                reject(err)
+            }
+        });
+    }
+
+    getTaskById(taskId) {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const result = await axios.post("http://localhost:5000/task/getTaskById", taskId)
+                resolve(result.data)
+            } catch (err) {
+                reject(err)
+            }
+        });
+    }
 }
 
 export default new HttpServer();

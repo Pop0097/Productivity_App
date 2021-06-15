@@ -4,42 +4,36 @@ import { withRouter } from 'react-router-dom';
 
 import HttpServer from '../utils/HttpServer';
 
-class TeamCard extends Component {
+class TaskCard extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            teamId: props.teamId,
-            team: {}
+            taskId: props.taskId,
+            task: {}
         }
     }
 
     async componentDidMount() {
-        const team = await HttpServer.getTeamById({ teamId: this.state.teamId });
+        const task = await HttpServer.getTaskById({ taskId: this.state.taskId });
 
         this.setState({
-            team: team.result
+            task: task.result
         })
     }
 
-    showTeam = (event) => {
+    showTask = (event) => {
         event.preventDefault();
-
-        this.props.history.push({
-            pathname: '/team',
-            state: {
-                teamId: this.state.teamId
-            }
-        });
+        alert(this.state.taskId)
     }
 
     render() {
         return (
             <div>
                 <Container>
-                    <Card onClick={this.showTeam}>
+                    <Card onClick={this.showTask}>
                         <Card.Body>
-                            <Card.Title>{this.state.team.name}</Card.Title>
+                            <Card.Title>{this.state.task.name}</Card.Title>
                             <Card.Text>
                                 Some quick example text to build on the card title and make up the bulk of
                                 the card's content.
@@ -52,4 +46,4 @@ class TeamCard extends Component {
     }
 }
 
-export default withRouter(TeamCard);
+export default withRouter(TaskCard);

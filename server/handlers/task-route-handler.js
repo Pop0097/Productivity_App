@@ -155,11 +155,45 @@ removeAssigneeHandler = async (req, res) => {
 
 }
 
+getTaskById = async (req, res) => {
+    const data = {
+        taskId: req.body.taskId,
+    };
+
+    console.log(data)
+
+    try {
+        if ('' === data.taskId) {
+            res.status(CONSTANTS.SERVER_ERROR_HTTP_CODE).json({
+                error: true,
+                message: CONSTANTS.TASK_ID_NOT_FOUND
+            });
+        } else {
+            const result = await queryHandler.getTaskById(data);
+
+            console.log(result);
+
+            res.status(CONSTANTS.SERVER_OK_HTTP_CODE).json({
+                error: false,
+                result: result,
+                message: CONSTANTS.TASK_FOUND_OK
+            });
+        }
+    } catch (err) {
+        res.status(CONSTANTS.SERVER_ERROR_HTTP_CODE).json({
+            error: true,
+            message: CONSTANTS.TASK_FOUND_FAILED,
+            errorMessage: err
+        });
+    }
+}
+
 module.exports = {
     createTaskHander,
     deleteTaskHandler,
     completeTaskHandler,
     incompleteTaskHandler,
     addAssigneeHandler,
-    removeAssigneeHandler
+    removeAssigneeHandler,
+    getTaskById
 };

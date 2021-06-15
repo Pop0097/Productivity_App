@@ -21,6 +21,7 @@ router.get('/team/getMembers', teamRouteHandler.getMembersRouteHandler);
 router.get('/team/searchTeams', teamRouteHandler.searchTeamsHandler);
 router.post('/team/getUsersTeams', teamRouteHandler.getUsersTeams);
 router.post('/team/getTeamById', teamRouteHandler.getTeamById);
+router.post('/team/getTeamTasksById', teamRouteHandler.getTasksForTeamId);
 /* Team creation and management ends */
 
 /* Task creation and management starts */
@@ -28,6 +29,7 @@ router.post('/task/createTask', taskRouteHandler.createTaskHander);
 router.delete('/task/deleteTask', taskRouteHandler.deleteTaskHandler);
 router.put('/task/completeTask', taskRouteHandler.completeTaskHandler);
 router.put('/task/incompleteTask', taskRouteHandler.incompleteTaskHandler);
+router.post('/task/getTaskById', taskRouteHandler.getTaskById);
 /* Task creation and management ends */
 
 module.exports = router;

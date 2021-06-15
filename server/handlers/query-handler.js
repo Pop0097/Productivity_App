@@ -298,6 +298,23 @@ getUsersTeams = (data) => {
     })
 }
 
+getTeamTasksById = (data) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            db.collection('tasks').find(
+                {
+                    teamId: data.teamId,
+                }).toArray().then(items => {
+                    resolve(items)
+                }).catch(err => {
+                    reject(err)
+                })
+        } catch (err) {
+            reject(err)
+        }
+    })
+}
+
 createTask = (data) => {
     return new Promise(async (resolve, reject) => {
         try {
@@ -380,6 +397,26 @@ incompleteTask = (data) => {
     });
 }
 
+getTaskById = (data) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            db.collection('tasks').findOne(
+                {
+                    _id: ObjectID(data.taskId)
+                }, (error, result) => {
+                    if (error) {
+                        reject(result);
+                    }
+
+                    resolve(result);
+                }
+            )
+        } catch (err) {
+            reject(err)
+        }
+    })
+}
+
 /* Helpers end */
 
 module.exports = {
@@ -399,10 +436,12 @@ module.exports = {
     getTeamById,
     getTeamByName,
     getUsersTeams,
+    getTeamTasksById,
 
     /* Task Stuff */
     createTask,
     deleteTask,
     completeTask,
     incompleteTask,
+    getTaskById
 };
