@@ -27,16 +27,23 @@ class Home extends Component {
         })
     }
 
+    createTeam = async (event) => {
+        event.preventDefault()
+
+        this.props.history.push('/create-team');
+    }
+
     render() {
         return (
             <div>
                 <Header />
+                <p onClick={this.createTeam}>Create Team</p>
                 <h1> Your Teams </h1>
 
                 <br />
 
                 {this.state.userTeams.map((id, i) => {
-                    return (<div><TeamCard key={id} teamId={id} /><br /></div>)
+                    return (<div><TeamCard key={id} userId={this.state.userId} teamId={id} /><br /></div>)
                 })}
             </div>
         );

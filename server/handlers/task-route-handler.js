@@ -16,6 +16,8 @@ createTaskHander = async (req, res) => {
         completed: false
     };
 
+    console.log(data);
+
     try {
         if ('' === data.name) {
             res.status(CONSTANTS.SERVER_ERROR_HTTP_CODE).json({

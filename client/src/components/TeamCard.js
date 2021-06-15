@@ -9,6 +9,7 @@ class TeamCard extends Component {
         super(props);
 
         this.state = {
+            userId: props.userId,
             teamId: props.teamId,
             team: {}
         }
@@ -28,7 +29,8 @@ class TeamCard extends Component {
         this.props.history.push({
             pathname: '/team',
             state: {
-                teamId: this.state.teamId
+                teamId: this.state.teamId,
+                userId: this.state.userId
             }
         });
     }
@@ -43,6 +45,11 @@ class TeamCard extends Component {
                             <Card.Text>
                                 Some quick example text to build on the card title and make up the bulk of
                                 the card's content.
+
+                                <br />
+                                <br />
+
+                                {this.state.userId}
                             </Card.Text>
                         </Card.Body>
                     </Card>

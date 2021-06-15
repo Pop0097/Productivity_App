@@ -142,6 +142,39 @@ class HttpServer {
             }
         });
     }
+
+    createTask(task) {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const result = await axios.post("http://localhost:5000/task/createTask", task)
+                resolve(result.data)
+            } catch (err) {
+                reject(err)
+            }
+        })
+    }
+
+    createTeam(team) {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const result = await axios.post("http://localhost:5000/team/createTeam", team)
+                resolve(result.data)
+            } catch (err) {
+                reject(err)
+            }
+        })
+    }
+
+    addMemberToTeam(details) {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const result = await axios.put("http://localhost:5000/team/addMember", details)
+                resolve(result.data)
+            } catch (err) {
+                reject(err)
+            }
+        })
+    }
 }
 
 export default new HttpServer();

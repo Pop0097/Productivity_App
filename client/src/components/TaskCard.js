@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, Card, Row, Col } from 'react-bootstrap';
+import { Container, Card } from 'react-bootstrap';
 import { withRouter } from 'react-router-dom';
 
 import HttpServer from '../utils/HttpServer';
@@ -9,6 +9,8 @@ class TaskCard extends Component {
         super(props);
 
         this.state = {
+            userId: props.userId,
+            teamId: props.teamId,
             taskId: props.taskId,
             task: {}
         }

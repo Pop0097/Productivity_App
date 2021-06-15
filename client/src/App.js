@@ -9,6 +9,7 @@ import Home from './pages/home/Home';
 import Team from './pages/team/Team';
 import Task from './pages/task/Task';
 import CreateTask from './pages/task/create/CreateTask';
+import CreateTeam from './pages/team/create/CreateTeam';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path="/team" component={Team} />
           <Route path="/task" component={Task} />
           <Route path="/create-task" component={CreateTask} />
+          <Route path="/create-team" component={CreateTeam} />
         </Switch>
       </Router>
     </div>

@@ -34,19 +34,10 @@ class Header extends Component {
         }
     }
 
-    createTeam = async (event) => {
-        event.preventDefault()
-
-        alert('wip')
-
-        this.props.history.push('/home');
-    }
-
     render() {
         return (
             <div>
                 <p onClick={this.handleLogOut}>Logout</p>
-                <p onClick={this.createTeam}>Create Team</p>
             </div>
         );
     }
