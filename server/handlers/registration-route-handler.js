@@ -84,7 +84,6 @@ loginRouteHandler = async (req, res) => {
         } else {
 
             const result = await queryHandler.getUserByUsername(data.username);
-            console.log(result);
 
             if (null === result || undefined === result) {
                 res.status(CONSTANTS.SERVER_NOT_FOUND_HTTP_CODE).json({
@@ -120,22 +119,13 @@ loginRouteHandler = async (req, res) => {
 
 logoutRouteHandler = async (req, res) => {
     try {
-        const result = await queryHandler.getUserByUsername(req.body.username);
+        await queryHandler.logout(req.body.userId);
 
-        if (null === result || undefined === result) {
-            res.status(CONSTANTS.SERVER_NOT_FOUND_HTTP_CODE).json({
-                error: true,
-                message: CONSTANTS.USER_LOGOUT_FAILED,
-            });
-        } else {
-            await queryHandler.logout(result._id);
-
-            res.status(CONSTANTS.SERVER_OK_HTTP_CODE).json({
-                error: false,
-                userId: result._id,
-                message: CONSTANTS.USER_LOGGED_OUT
-            });
-        }
+        res.status(CONSTANTS.SERVER_OK_HTTP_CODE).json({
+            error: false,
+            userId: req.body.userId,
+            message: CONSTANTS.USER_LOGGED_OUT
+        });
     } catch (err) {
         res.status(CONSTANTS.SERVER_ERROR_HTTP_CODE).json({
             error: true,

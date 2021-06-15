@@ -28,7 +28,7 @@ createTeamRouteHandler = async (req, res) => {
             return res.status(CONSTANTS.SERVER_ERROR_HTTP_CODE).json({
                 error: true,
                 message: CONSTANTS.ADMIN_ID_NOT_FOUND
-            }); 
+            });
         } else {
             const result = await queryHandler.createTeam(data);
 
@@ -104,10 +104,19 @@ addMemberRouteHandler = async (req, res) => {
             });
         } else {
 
-            const count = await queryHandler.checkUserInTeam(data);
+            const result = await queryHandler.getTeamById({ id: data.teamId });
+            var count = 0;
+
+            const teamMembers = result.members
+            for (var i = 0; i < teamMembers.length; i++) {
+                if (teamMembers[i] === data.userId) {
+                    count++;
+                }
+            }
 
             if (0 == count) {
                 const result = await queryHandler.addMemberToTeam(data);
+                const result2 = await queryHandler.addTeamToMember(data);
 
                 res.status(CONSTANTS.SERVER_OK_HTTP_CODE).json({
                     error: false,
@@ -220,7 +229,7 @@ getMembersRouteHandler = async (req, res) => {
             });
         } else {
             const result = await queryHandler.getTeamById(data);
-            
+
             res.status(CONSTANTS.SERVER_OK_HTTP_CODE).json({
                 error: false,
                 result: result.members,
@@ -237,6 +246,74 @@ getMembersRouteHandler = async (req, res) => {
     }
 }
 
+getUsersTeams = async (req, res) => {
+    const data = {
+        userId: req.body.userId
+    }
+
+    try {
+        if ('' === data.userId) {
+            return res.status(CONSTANTS.SERVER_ERROR_HTTP_CODE).json({
+                error: true,
+                message: CONSTANTS.TEAM_NAME_NOT_FOUND
+            });
+        } else {
+            const result = await queryHandler.getUsersTeams(data);
+
+            res.status(CONSTANTS.SERVER_OK_HTTP_CODE).json({
+                error: false,
+                result: result.teams,
+                message: CONSTANTS.GETTING_TEAMS_SUCCESS,
+            });
+        }
+    } catch (err) {
+        res.status(CONSTANTS.SERVER_ERROR_HTTP_CODE).json({
+            error: true,
+            message: CONSTANTS.GETTING_MEMBERS_FAILED,
+            extraMessage: CONSTANTS.GETTING_TEAMS_FAILED,
+            errorMessage: err,
+        });
+    }
+}
+
+getTeamById = async (req, res) => {
+    const data = {
+        teamId: req.body.teamId
+    }
+
+    try {
+        if ('' === data.teamId) {
+            return res.status(CONSTANTS.SERVER_ERROR_HTTP_CODE).json({
+                error: true,
+                message: CONSTANTS.TEAM_ID_NOT_FOUND
+            });
+        } else if ('' === data.userId) {
+            return res.status(CONSTANTS.SERVER_ERROR_HTTP_CODE).json({
+                error: true,
+                message: CONSTANTS.USER_ID_NOT_FOUND
+            });
+        } else {
+
+            const result = await queryHandler.getTeamById({ id: data.teamId });
+
+            console.log(result)
+
+            res.status(CONSTANTS.SERVER_OK_HTTP_CODE).json({
+                error: false,
+                result: result,
+                message: CONSTANTS.GETTING_TEAMS_SUCCESS,
+            });
+        }
+    } catch (err) {
+        res.status(CONSTANTS.SERVER_ERROR_HTTP_CODE).json({
+            error: true,
+            message: CONSTANTS.TEAM_ADD_MEMBER_FAILED,
+            extraMessage: CONSTANTS.GETTING_TEAMS_FAILED,
+            errorMessage: err,
+        });
+    }
+}
+
 module.exports = {
     createTeamRouteHandler,
     teamNameCheckHandler,
@@ -244,4 +321,6 @@ module.exports = {
     removeMemberRouteHandler,
     searchTeamsHandler,
     getMembersRouteHandler,
+    getUsersTeams,
+    getTeamById
 };

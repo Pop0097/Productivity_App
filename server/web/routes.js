@@ -19,6 +19,8 @@ router.put('/team/addMember', teamRouteHandler.addMemberRouteHandler);
 router.put('/team/removeMember', teamRouteHandler.removeMemberRouteHandler);
 router.get('/team/getMembers', teamRouteHandler.getMembersRouteHandler);
 router.get('/team/searchTeams', teamRouteHandler.searchTeamsHandler);
+router.post('/team/getUsersTeams', teamRouteHandler.getUsersTeams);
+router.post('/team/getTeamById', teamRouteHandler.getTeamById);
 /* Team creation and management ends */
 
 /* Task creation and management starts */

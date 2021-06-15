@@ -62,20 +62,18 @@ registerUser = (data) => {
 }
 
 logout = (userId) => {
-    const data = {
-        $set: {
-            'online': false,
-        }
-    }
     return new Promise(async (resolve, reject) => {
         try {
-            db.collection('users').updateOne({ _id: ObjectID(userId) }, data, (err, result) => {
+            db.collection('users').findOneAndUpdate({ _id: ObjectID(userId) }, {
+                "$set": { // Sets values for the parameters
+                    'online': false,
+                }
+            }, (err, result) => { // Error catching
                 if (err) {
                     reject(err);
                 }
-
-                resolve(result);
-            })
+                resolve(result.value);
+            });
         } catch (err) {
             reject(err);
         }
@@ -106,7 +104,6 @@ getUserByUsername = (username) => {
         try {
             db.collection('users').find({ username: username })
                 .toArray((error, result) => { // Converts found items to an array of objects
-                    console.log(username, result);
                     if (error) {
                         reject(error);
                     }
@@ -167,23 +164,6 @@ teamNameCheck = (data) => {
     });
 }
 
-checkUserInTeam = (data) => {
-    return new Promise(async (resolve, reject) => {
-        try {
-            db.collection('teams').find({ members: data.userId })
-                .count((err, result) => {
-                    if (err) {
-                        reject(err);
-                    }
-
-                    resolve(result);
-                })
-        } catch (err) {
-            reject(err);
-        }
-    });
-}
-
 addMemberToTeam = (data) => {
 
     return new Promise(async (resolve, reject) => {
@@ -207,6 +187,30 @@ addMemberToTeam = (data) => {
             reject(err);
         }
     });
+}
+
+addTeamToMember = (data) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            db.collection('users').findOneAndUpdate(
+                {
+                    _id: ObjectID(data.userId)
+                },
+                {
+                    $addToSet: { // Appends this element to array
+                        teams: data.teamId
+                    }
+                }, (error, result) => {
+                    if (error) {
+                        reject(error);
+                    }
+
+                    resolve(result);
+                });
+        } catch (err) {
+            reject(err);
+        }
+    })
 }
 
 removeMemberFromTeam = (data) => {
@@ -273,6 +277,25 @@ getTeamByName = (data) => {
             reject(err)
         }
     });
+}
+
+getUsersTeams = (data) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            db.collection('users').findOne(
+                {
+                    _id: ObjectID(data.userId),
+                }, (err, result) => {
+                    if (err) {
+                        reject(err);
+                    }
+
+                    resolve(result);
+                });
+        } catch (err) {
+            reject(err)
+        }
+    })
 }
 
 createTask = (data) => {
@@ -370,11 +393,12 @@ module.exports = {
     /* Team Stuff */
     createTeam,
     teamNameCheck,
-    checkUserInTeam,
     addMemberToTeam,
+    addTeamToMember,
     removeMemberFromTeam,
     getTeamById,
     getTeamByName,
+    getUsersTeams,
 
     /* Task Stuff */
     createTask,
