@@ -25,12 +25,31 @@ class Team extends Component {
         })
     }
 
+    createTaskPage = (event) => {
+        event.preventDefault();
+
+        this.props.history.push("/create-task");
+    }
+
     render() {
         return (
             <div>
-                <p> Team: {this.state.team.name} </p>
+                <p onClick={this.createTaskPage}> Create Task </p>
+                <h1> {this.state.team.name} </h1>
+                <h1>Todo:</h1>
                 {this.state.tasks.map((task, i) => {
-                    return (<TaskCard taskId={task._id} />)
+                    if (!task.completed) { // Only print tasks that are not completed
+                        return (<div><TaskCard key={task._id} taskId={task._id} /><br /></div>)
+                    }
+                })}
+
+                <br />
+
+                <h1>Completed:</h1>
+                {this.state.tasks.map((task, i) => {
+                    if (task.completed) { // Only print tasks that are not completed
+                        return (<div><TaskCard key={task._id} taskId={task._id} /><br /></div>)
+                    }
                 })}
             </div>
         );

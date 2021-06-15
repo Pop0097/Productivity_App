@@ -37,16 +37,9 @@ class Header extends Component {
     createTeam = async (event) => {
         event.preventDefault()
 
-        try {
-            await HttpServer.removeLocalStorage();
-            await HttpServer.logout({ userId: this.state.userId });
+        alert('wip')
 
-            this.props.history.push('/');
-        } catch (err) {
-            console.log(err);
-            alert('Error logging out.');
-            throw err;
-        }
+        this.props.history.push('/home');
     }
 
     render() {

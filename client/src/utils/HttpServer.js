@@ -120,6 +120,28 @@ class HttpServer {
             }
         });
     }
+
+    completeTask(taskId) {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const result = await axios.put("http://localhost:5000/task/completeTask", taskId)
+                resolve(result.data)
+            } catch (err) {
+                reject(err)
+            }
+        });
+    }
+
+    reopenTask(taskId) {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const result = await axios.put("http://localhost:5000/task/incompleteTask", taskId)
+                resolve(result.data)
+            } catch (err) {
+                reject(err)
+            }
+        });
+    }
 }
 
 export default new HttpServer();

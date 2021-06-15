@@ -31,10 +31,12 @@ class Home extends Component {
         return (
             <div>
                 <Header />
-                <p>Hello</p>
+                <h1> Your Teams </h1>
+
+                <br />
 
                 {this.state.userTeams.map((id, i) => {
-                    return (<TeamCard teamId={id} />)
+                    return (<div><TeamCard key={id} teamId={id} /><br /></div>)
                 })}
             </div>
         );

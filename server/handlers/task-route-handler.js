@@ -160,8 +160,6 @@ getTaskById = async (req, res) => {
         taskId: req.body.taskId,
     };
 
-    console.log(data)
-
     try {
         if ('' === data.taskId) {
             res.status(CONSTANTS.SERVER_ERROR_HTTP_CODE).json({
@@ -170,8 +168,6 @@ getTaskById = async (req, res) => {
             });
         } else {
             const result = await queryHandler.getTaskById(data);
-
-            console.log(result);
 
             res.status(CONSTANTS.SERVER_OK_HTTP_CODE).json({
                 error: false,
