@@ -74,7 +74,6 @@ class Team extends Component {
                     <p onClick={this.editMembers}> Edit Team Members </p>
                 }
 
-
                 <h1> {this.state.team.name} </h1>
 
                 <h1>Team Members:</h1>

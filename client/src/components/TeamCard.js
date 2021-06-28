@@ -35,13 +35,26 @@ class TeamCard extends Component {
         });
     }
 
+    leaveTeam = (event) => {
+        event.preventDefault()
+
+        HttpServer.removeMemberFromTeam({ teamId: this.props.teamId, userId: this.props.userId })
+    }
+
     render() {
         return (
             <div>
                 <Container>
-                    <Card onClick={this.showTeam}>
+                    <Card>
                         <Card.Body>
-                            <Card.Title>{this.state.team.name}</Card.Title>
+                            <Card.Title onClick={this.showTeam}>{this.state.team.name}</Card.Title>
+                            <Card.Text>
+                                { // Admins should not leave team
+                                    this.state.team.adminId != this.state.userId &&
+                                    <p onClick={this.leaveTeam}>Leave Team</p>
+                                }
+
+                            </Card.Text>
                         </Card.Body>
                     </Card>
                 </Container>

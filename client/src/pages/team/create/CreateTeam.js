@@ -24,7 +24,7 @@ class CreateTeam extends Component {
         })
     }
 
-    createTask = async (event) => {
+    createTeam = async (event) => {
         event.preventDefault();
 
         const response = await HttpServer.createTeam({
@@ -82,8 +82,8 @@ class CreateTeam extends Component {
                             />
                         </Form.Group>
 
-                        <Button variant="primary" type="submit" onClick={this.createTask}>
-                            Create Task
+                        <Button variant="primary" type="submit" onClick={this.createTeam}>
+                            Create Team
                         </Button>
                     </Form>
                 </Container>

@@ -51,12 +51,11 @@ class TaskCard extends Component {
         return (
             <div>
                 <Container>
-                    <Card onClick={this.showTask}>
+                    <Card>
                         <Card.Body>
-                            <Card.Title>{this.state.task.name}</Card.Title>
+                            <Card.Title onClick={this.showTask}>{this.state.task.name}</Card.Title>
                             <Card.Text>
-                                <p>Some quick example text to build on the card title and make up the bulk of
-                                    the card's content. </p>
+                                <p>{this.state.task.comments}</p>
 
                                 <br />
 
