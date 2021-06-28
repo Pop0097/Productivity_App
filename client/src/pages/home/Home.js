@@ -27,6 +27,16 @@ class Home extends Component {
         })
     }
 
+    async componentDidUpdate() {
+        const userId = await HttpServer.getUserId();
+        const userTeams = await HttpServer.getUsersTeams({ userId: userId });
+
+        this.setState({
+            userId: userId,
+            userTeams: userTeams.result
+        })
+    }
+
     createTeam = async (event) => {
         event.preventDefault()
 

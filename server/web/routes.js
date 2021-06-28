@@ -10,6 +10,8 @@ router.post('/registration/register', registrationRouteHandler.registerRouteHand
 router.get('/registration/usernameAvailable', registrationRouteHandler.userNameCheckHandler);
 router.post('/registration/login', registrationRouteHandler.loginRouteHandler);
 router.post('/registration/logout', registrationRouteHandler.logoutRouteHandler);
+router.post('/registration/getUserById', registrationRouteHandler.getUserById);
+router.post('/registration/getUsersByUsername', registrationRouteHandler.getUsersByUsername);
 /* Registration Routes ends */
 
 /* Team creation and management starts */

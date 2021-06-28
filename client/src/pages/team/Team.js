@@ -3,6 +3,7 @@ import { withRouter } from 'react-router-dom';
 
 import HttpServer from '../../utils/HttpServer';
 import TaskCard from '../../components/TaskCard';
+import UserQuickPreviewCard from '../../components/UserQuickPreviewCard';
 
 class Team extends Component {
     constructor(props) {
@@ -12,7 +13,8 @@ class Team extends Component {
             userId: this.props.location.state.userId,
             teamId: this.props.location.state.teamId,
             team: {},
-            tasks: []
+            tasks: [],
+            members: []
         }
     }
 
@@ -22,7 +24,19 @@ class Team extends Component {
 
         this.setState({
             team: team.result,
-            tasks: tasks.result
+            tasks: tasks.result,
+            members: team.result.members
+        })
+    }
+
+    async componentDidUpdate() {
+        const team = await HttpServer.getTeamById({ teamId: this.props.location.state.teamId });
+        const tasks = await HttpServer.getTeamTasksById({ teamId: this.props.location.state.teamId });
+
+        this.setState({
+            team: team.result,
+            tasks: tasks.result,
+            members: team.result.members
         })
     }
 
@@ -38,12 +52,38 @@ class Team extends Component {
         });
     }
 
+    editMembers = (event) => {
+        event.preventDefault();
+
+        this.props.history.push({
+            pathname: "/edit-team-members",
+            state: {
+                teamId: this.state.teamId,
+                userId: this.state.userId
+            }
+        });
+    }
+
     render() {
         return (
             <div>
                 <p onClick={this.createTaskPage}> Create Task </p>
+
+                {/* Only show if we are are admin */}
+                {this.state.userId === this.state.team.adminId &&
+                    <p onClick={this.editMembers}> Edit Team Members </p>
+                }
+
+
                 <h1> {this.state.team.name} </h1>
-                <p>{this.state.teamId} || {this.state.userId}</p>
+
+                <h1>Team Members:</h1>
+                {this.state.members.map((memberId, i) => {
+                    return (<div><UserQuickPreviewCard key={memberId} userId={memberId} teamId={this.state.teamId} inTeam={true} viewingInEditMode={false} /><br /></div>)
+                })}
+
+                <br />
+
                 <h1>Todo:</h1>
                 {this.state.tasks.map((task, i) => {
                     if (!task.completed) { // Only print tasks that are not completed

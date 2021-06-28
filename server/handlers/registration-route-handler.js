@@ -170,10 +170,78 @@ userNameCheckHandler = async (req, res) => {
     }
 }
 
+getUserById = async (req, res) => {
+    const data = {
+        userId: req.body.userId
+    }
+
+    try {
+        if ('' === data.userId) { // Makes sure there is actually an input
+            res.status(CONSTANTS.SERVER_ERROR_HTTP_CODE).json({
+                error: true,
+                message: CONSTANTS.USERID_NOT_FOUND
+            });
+        } else {
+            // Use await clause so we only continue on if this process has completed
+            const result = await queryHandler.getUserById(data);
+
+            if (null == result) {
+                res.status(CONSTANTS.SERVER_OK_HTTP_CODE).json({
+                    error: false,
+                    message: CONSTANTS.USER_NOT_FOUND
+                })
+            } else {
+                res.status(CONSTANTS.SERVER_OK_HTTP_CODE).json({
+                    error: false,
+                    message: CONSTANTS.USER_FOUND,
+                    result: result
+                })
+            }
+        }
+    } catch (err) {
+        res.status(CONSTANTS.SERVER_ERROR_HTTP_CODE).json({
+            error: true,
+            message: CONSTANTS.SERVER_ERROR_MESSAGE,
+            errorMessage: err,
+        });
+    }
+}
+
+getUsersByUsername = async (req, res) => {
+    const data = {
+        username: req.body.username
+    }
+
+    try {
+        if (data.username === "") {
+            res.status(CONSTANTS.SERVER_ERROR_HTTP_CODE).json({
+                error: true,
+                message: CONSTANTS.USERNAME_NOT_FOUND
+            });
+        } else {
+            const result = await queryHandler.getUsersByUsername(data);
+
+            res.status(CONSTANTS.SERVER_OK_HTTP_CODE).json({
+                error: false,
+                message: CONSTANTS.USER_FOUND,
+                result: result
+            })
+        }
+    } catch (err) {
+        res.status(CONSTANTS.SERVER_ERROR_HTTP_CODE).json({
+            error: true,
+            message: CONSTANTS.SERVER_ERROR_MESSAGE,
+            errorMessage: err,
+        });
+    }
+}
+
 module.exports = {
     registerRouteHandler,
     loginRouteHandler,
     logoutRouteHandler,
     userNameCheckHandler,
+    getUserById,
+    getUsersByUsername
 };
 

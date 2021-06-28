@@ -175,6 +175,39 @@ class HttpServer {
             }
         })
     }
+
+    removeMemberFromTeam(details) {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const result = await axios.put("http://localhost:5000/team/removeMember", details)
+                resolve(result.data)
+            } catch (err) {
+                reject(err)
+            }
+        })
+    }
+
+    getUserById(userId) {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const result = await axios.post("http://localhost:5000/registration/getUserById", userId)
+                resolve(result.data)
+            } catch (err) {
+                reject(err)
+            }
+        })
+    }
+
+    getUsersByUsername(username) {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const result = await axios.post("http://localhost:5000/registration/getUsersByUsername", { username: username })
+                resolve(result.data)
+            } catch (err) {
+                reject(err)
+            }
+        })
+    }
 }
 
 export default new HttpServer();

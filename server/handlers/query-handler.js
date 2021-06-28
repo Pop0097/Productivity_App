@@ -115,6 +115,22 @@ getUserByUsername = (username) => {
     });
 }
 
+getUsersByUsername = (data) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            db.collection('users').find({ username: { $regex: data.username, $options: "$i" } })
+                .toArray((error, result) => { // Converts found items to an array of objects
+                    if (error) {
+                        reject(error);
+                    }
+                    resolve(result);
+                });
+        } catch (error) {
+            reject(error)
+        }
+    });
+}
+
 userNameCheck = (data) => {
     return new Promise(async (resolve, reject) => {
         try {
@@ -125,6 +141,25 @@ userNameCheck = (data) => {
                     }
                     resolve(result);
                 });
+        } catch (error) {
+            reject(error)
+        }
+    });
+}
+
+getUserById = (data) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            db.collection('users').findOne(
+                {
+                    _id: ObjectID(data.userId)
+                }, (error, result) => {
+                    if (error) {
+                        reject(result);
+                    }
+                    resolve(result);
+                }
+            )
         } catch (error) {
             reject(error)
         }
@@ -160,6 +195,27 @@ teamNameCheck = (data) => {
                 });
         } catch (err) {
             reject(err);
+        }
+    });
+}
+
+checkUserInTeam = (data) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            db.collection('teams').find({ _id: ObjectID(data.teamId) })
+                .toArray((error, result) => { // Converts found items to an array of objects
+                    if (error) {
+                        reject(error);
+                    }
+
+                    if (result[0].members.includes(data.userId)) {
+                        resolve(true);
+                    } else {
+                        resolve(false);
+                    }
+                });
+        } catch (error) {
+            reject(error)
         }
     });
 }
@@ -235,6 +291,30 @@ removeMemberFromTeam = (data) => {
             reject(err);
         }
     });
+}
+
+removeTeamFromMember = (data) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            db.collection('users').findOneAndUpdate(
+                {
+                    _id: ObjectID(data.userId)
+                },
+                {
+                    $pull: { // Removes all instances of this element from array
+                        teams: data.teamId
+                    }
+                }, (error, result) => {
+                    if (error) {
+                        reject(error);
+                    }
+
+                    resolve(result);
+                });
+        } catch (err) {
+            reject(err);
+        }
+    })
 }
 
 getTeamById = (data) => {
@@ -425,14 +505,18 @@ module.exports = {
     logout,
     makeUserOnline,
     getUserByUsername,
+    getUsersByUsername,
     userNameCheck,
+    getUserById,
 
     /* Team Stuff */
     createTeam,
     teamNameCheck,
+    checkUserInTeam,
     addMemberToTeam,
     addTeamToMember,
     removeMemberFromTeam,
+    removeTeamFromMember,
     getTeamById,
     getTeamByName,
     getUsersTeams,

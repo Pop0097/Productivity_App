@@ -147,6 +147,8 @@ removeMemberRouteHandler = async (req, res) => {
         userId: body.userId,
     };
 
+    console.log(data);
+
     try {
         if ('' === data.teamId) {
             return res.status(CONSTANTS.SERVER_ERROR_HTTP_CODE).json({
@@ -160,10 +162,11 @@ removeMemberRouteHandler = async (req, res) => {
             });
         } else {
 
-            const count = await queryHandler.checkUserInTeam(data);
+            const found = await queryHandler.checkUserInTeam(data);
 
-            if (1 == count) {
+            if (found) {
                 const result = await queryHandler.removeMemberFromTeam(data);
+                const result2 = await queryHandler.removeTeamFromMember(data);
 
                 res.status(CONSTANTS.SERVER_OK_HTTP_CODE).json({
                     error: false,

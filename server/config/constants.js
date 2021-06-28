@@ -28,6 +28,8 @@ module.exports.USER_LOGIN_FAILED = `User login failed.`;
 module.exports.USER_NOT_LOGGED_IN = `User is not logged in.`;
 module.exports.USER_LOGGED_OUT = `User has logged out.`;
 module.exports.USER_LOGOUT_FAILED = `User logout has failed.`;
+module.exports.USER_FOUND = `User found.`;
+module.exports.USER_NOT_FOUND = `User not found.`;
 /* Registration related constants ends */
 
 /* Team related constants starts */
